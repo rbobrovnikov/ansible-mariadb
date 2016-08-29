@@ -1,0 +1,7 @@
+---
+
+mysqlservice: mysqld
+mysql_port: 3306
+dbuser: dbuser
+dbname: ansibletestdb
+dbuserpass: $0meTe$tPa$$worD_7
