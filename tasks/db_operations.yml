@@ -1,0 +1,43 @@
+---
+
+- name: Include vars
+  include_vars: "{{ path_to_db_vars }}"
+  tags: mariadb
+
+- name: Create DB
+  mysql_db:
+   name: "{{ item }}"
+   state: present
+  with_items:
+   - "{{ dbname }}"
+  when: dbstate == 'create'
+  tags: mariadb
+
+- name: Create DB User
+  mysql_user:
+   name: "{{ dbuser }}"
+   password: "{{ dbuserpass }}"
+   priv: "{{ user_priv }}" 
+   state: present
+  when: dbstate == 'create'
+  tags: mariadb
+
+#===========================================
+
+- name: Copy Backup DB
+  copy:
+   src: "{{ path_to_sqldump }}/{{ dbdump }}"
+   dest: /tmp
+  when: dbstate == 'import'
+  tags: mariadb
+
+- name: Import Backup DB
+  mysql_db:
+   name: "{{ dbname }}"
+   state: import 
+   target: /tmp/{{ dbdump }}
+  with_items:
+   - "{{ dbdump }}"
+  when: dbstate == 'import'
+  tags: mariadb
+  changed_when: true
