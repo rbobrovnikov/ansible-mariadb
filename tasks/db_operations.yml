@@ -20,7 +20,8 @@
   mysql_user:
    name: "{{ dbuser }}"
    password: "{{ dbuserpass }}"
-   priv: "{{ user_priv }}" 
+   priv: "{{ db_user_priv }}" 
+   host: "{{ db_user_host }}" 
    state: present
   when: dbstate == 'create'
   tags: mariadb_create
