@@ -5,12 +5,12 @@
   with_items:
    - MySQL-python
    - mariadb-server
-  tags: mariadb
+  tags: mariadb_install
   notify:
    - mariadb start
 
 - name: mariadb start
   service: name=mariadb state=started enabled=yes
-  tags: mariadb
+  tags: mariadb_install
 
 - include: db_operations.yml

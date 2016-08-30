@@ -1,8 +1,11 @@
 ---
 
-- name: Include vars
+- name: Include custom vars
   include_vars: "{{ path_to_db_vars }}"
-  tags: mariadb
+  tags:
+   - mariadb_create 
+   - mariadb_copy
+   - mariadb_import
 
 - name: Create DB
   mysql_db:
@@ -11,7 +14,7 @@
   with_items:
    - "{{ dbname }}"
   when: dbstate == 'create'
-  tags: mariadb
+  tags: mariadb_create
 
 - name: Create DB User
   mysql_user:
@@ -20,7 +23,7 @@
    priv: "{{ user_priv }}" 
    state: present
   when: dbstate == 'create'
-  tags: mariadb
+  tags: mariadb_create
 
 #===========================================
 
@@ -29,7 +32,7 @@
    src: "{{ path_to_sqldump }}/{{ dbdump }}"
    dest: /tmp
   when: dbstate == 'import'
-  tags: mariadb
+  tags: mariadb_copy
 
 - name: Import Backup DB
   mysql_db:
@@ -39,5 +42,5 @@
   with_items:
    - "{{ dbdump }}"
   when: dbstate == 'import'
-  tags: mariadb
-  changed_when: true
+  tags: mariadb_import
+#  changed_when: 
