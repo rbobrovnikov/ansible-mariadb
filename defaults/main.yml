@@ -2,6 +2,7 @@
 
 mysqlservice: mysqld
 mysql_port: 3306
-path_to_db_vars: '/path/to/custom_vars.yml'
-#create,import,create_import
-dbstate: 'import' 
+path_to_db_vars: 'mariadb/vars/custom_vars.yml'
+
+#Args. - create,import
+dbstate: 'create' 

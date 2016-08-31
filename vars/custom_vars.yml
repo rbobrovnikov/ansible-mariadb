@@ -1,0 +1,10 @@
+---
+
+#dbname: all 
+dbname: testdb 
+dbuser: dbuser
+dbuserpass: password 
+dbdump: all-databases.sql
+db_user_priv: '*.*:ALL'
+db_user_host: '%'
+path_to_sqldump: '/your/path/to/dump'
